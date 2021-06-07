@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Validation</title>
+</head>
+<style>
+    .box{
+        padding: 5%;
+        background-color: cyan;
+        box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.2);
+    }
+    .box h1{
+        text-align: center;
+
+    }
+
+    .box form input,.box form button{
+        width: 20vw;
+        padding: 5px;
+        margin: 5px;
+        border: 1px solid cyan;
+    }
+    .box2{
+        display:flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        height: 100vh;
+    }
+
+    .body{
+        background-color: darkcyan;
+    }
+
+    .body.success{
+        background-color: greenyellow;
+    }
+
+    .body.error{
+        background-color: red;
+    }
+
+    .input.success{
+        border: 3px dashed green;
+    }
+
+    .input.error{
+        border: 3px dashed red;
+    }
+
+
+</style>
+<body id="body" class="body">
+    <div class="box2">
+    <div class="box"><h1>Form Validation</h1>
+        <form>
+            <input type="text" id="username" class="input" name="username" placeholder="Enter A Username">
+            <br>
+            <input type="password" id="password" class="input" name="password" placeholder="Enter A Password">
+            <br>
+            <input type="password" id="confirm_password" class="input" name="confirm_password" placeholder="Enter Password Again">
+            <br>
+            <input type="submit" value="Register" id="Register">
+
+        </form>
+        <p id="error-msg"></p>
+    </div>
+    </div>
+
+    
+</body>
+<script>
+    const username=document.getElementById('username');
+    const password=document.getElementById('password');
+    const confirm_password=document.getElementById('confirm_password');
+    const register=document.getElementById('Register');
+    const body=document.getElementById('body');
+    const error_msg=document.getElementById('error-msg');
+
+    register.addEventListener('click',function(e) {
+        e.preventDefault();
+        error_msg.innerHTML='' ;
+        checkErrors(username,'Invalid Username');
+        checkErrors(password,'Invalid Password');
+        checkErrors(confirm_password,'Please Confirm Your Password');
+        checkLength(username,'The Username Length Should Be 10 Characters Long');
+        checkLength(password,'The Password Length Should Be 10 Characters Long');
+        if (password.value.trim()!=confirm_password.value.trim()){
+            error_msg.innerHTML+='The Password Does Not Match';
+           
+        }
+        else{
+            password.className = "input success";
+            confirm_password.className = "input success"
+        }
+        if(error_msg.innerHTML==''){
+            body.className = "body success";
+            username.classList.add('success');
+            password.classList.add('success');
+            confirm_password.classList.add('success');
+        }
+
+        else{
+            body.className = "body error";
+        }
+    });
+    function checkErrors(input,text){
+        if (input.value.trim()==''){
+            error_msg.innerHTML+=text+'<br/>';
+            input.className = "input error";
+        }
+
+    }
+
+   function checkLength(input,text){
+      if( input.value.trim().length == 10){
+        input.className = 'input success' ; 
+      }
+
+      else{
+          error_msg.innerHTML+=text+'<br/>';
+          input.className = 'input error';
+
+
+      }
+       
+
+   }
+</script>
+</html>
